@@ -1,0 +1,7 @@
+openssl req -nodes \
+    -days 365 \
+    -newkey rsa:2048 \
+    -keyout estagiario.key \
+    -out estagiario.csr \
+    -subj '/CN=estagiario/O=k8scluster' \
+    -addext 'subjectAltName = DNS:estagiario.k8scluster'
