@@ -1,0 +1,32 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: nginx-ro
+  namespace: ingress-nginx
+rules:
+- apiGroups:
+  - ""
+  resources: 
+  - pods
+  verbs:
+  - list
+- apiGroups:
+  - batch
+  resources: 
+  - jobs
+  verbs:
+  - list
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: nginx-ro
+  namespace: ingress-nginx
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: nginx-ro
+subjects:
+- kind: ServiceAccount
+  name: kubectl
+  namespace: default
