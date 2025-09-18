@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nginx
+  name: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: nginx
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - worker-3
+          # preferredDuringSchedulingIgnoredDuringExecution:
+          # - weight: 1
+          #   preference:
+          #     matchExpressions:
+          #     - key: another-node-label-key
+          #       operator: In
+          #       values:
+          #       - another-node-label-value
+      containers:
+      - image: nginx
+        name: nginx
+
